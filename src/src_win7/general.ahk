@@ -34,6 +34,7 @@ GroupAdd, Editor2, ahk_class Chrome_WidgetWin_1
 GroupAdd, BlackListApp2, ahk_class rfb::win32::DesktopWindowClass	;VNC
 GroupAdd, BlackListApp2, ahk_class vncviewer::DesktopWindow				;VNC
 GroupAdd, BlackListApp2, ahk_class vwr::CDesktopWin       				;VNC
+GroupAdd, BlackListApp2, ahk_class vwr::CSurfaceWin       				;VNC
 GroupAdd, BlackListApp2, ahk_class TSSHELLWND	    			;Remote Desktop
 GroupAdd, BlackListApp2, ahk_class TscShellContainerClass	    ;Remote Desktop (win7)
 GroupAdd, BlackListApp2, ahk_class Progman         ; Desktop
@@ -44,6 +45,7 @@ GroupAdd, BlackListApp2, ahk_class DV2ControlHost  ; start menu
 GroupAdd, BlackListCopy, ahk_class rfb::win32::DesktopWindowClass		;VNC
 GroupAdd, BlackListCopy, ahk_class vncviewer::DesktopWindow				;VNC
 GroupAdd, BlackListCopy, ahk_class vwr::CDesktopWin       				;VNC
+GroupAdd, BlackListCopy, ahk_class vwr::CSurfaceWin       				;VNC
 GroupAdd, BlackListCopy, ahk_class Progman         ; Desktop
 GroupAdd, BlackListCopy, ahk_class WorkerW         ; Desktop
 GroupAdd, BlackListCopy, ahk_class Shell_TrayWnd   ; Taskbar
@@ -56,6 +58,7 @@ GroupAdd, BlackListCopy, ahk_class TscShellContainerClass	    ;Remote Desktop (w
 GroupAdd, BlackListPaste, ahk_class rfb::win32::DesktopWindowClass		;VNC
 GroupAdd, BlackListPaste, ahk_class vncviewer::DesktopWindow				;VNC
 GroupAdd, BlackListPaste, ahk_class vwr::CDesktopWin       				;VNC
+GroupAdd, BlackListPaste, ahk_class vwr::CSurfaceWin       				;VNC
 GroupAdd, BlackListPaste, ahk_class Shell_TrayWnd   ; Taskbar
 GroupAdd, BlackListPaste, ahk_class DV2ControlHost  ; start menu
 ; GroupAdd, BlackListPaste, ahk_class TSSHELLWND	    			;Remote Desktop
@@ -68,6 +71,7 @@ GroupAdd, Desktop, ahk_class WorkerW         ; Desktop
 GroupAdd, BlackListGesture, ahk_class rfb::win32::DesktopWindowClass	;VNC
 GroupAdd, BlackListGesture, ahk_class vncviewer::DesktopWindow				;VNC
 GroupAdd, BlackListGesture, ahk_class vwr::CDesktopWin       				  ;VNC
+GroupAdd, BlackListGesture, ahk_class vwr::CSurfaceWin       				;VNC
 
 GroupAdd, RemoteDesk, ahk_class TSSHELLWND	    			;Remote Desktop
 GroupAdd, RemoteDesk, ahk_class TscShellContainerClass	    ;Remote Desktop (win7)
