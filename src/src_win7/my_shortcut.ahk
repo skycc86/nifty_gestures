@@ -575,7 +575,7 @@ Sleep, 100 ; if omitted, GUI sometimes stays in picture
 
 
 ; CaptureScreen(square_box, False, savetofile, 100)
-RunWait, %A_ScriptDir%\..\..\..\Capture2Text\Capture2Text.exe -s "%scan_x_start% %scan_y_start% %scan_x_end% %scan_y_end%" --clipboard
+RunWait, %A_ScriptDir%\..\Capture2Text\Capture2Text.exe -s "%scan_x_start% %scan_y_start% %scan_x_end% %scan_y_end%" --clipboard
 
 TrayTip, , %tipmsg%, , 1
 sleep, 500
