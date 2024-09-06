@@ -119,10 +119,14 @@ else
 	Send, {tab}
 return	
 
+/*
 #q::
 	Send, ^c
   Run, %clipboard%
 return	
+*/
+
+
 
 CAPSMENU:
 Menu,convert,Add
@@ -487,6 +491,91 @@ if ( PrtSc_AltState != "D" )
 square_box = %scan_x_start%, %scan_y_start%, %scan_x_end%, %scan_y_end%
 Sleep, 100 ; if omitted, GUI sometimes stays in picture
 CaptureScreen(square_box, False, savetofile, 100)
+
+TrayTip, , %tipmsg%, , 1
+sleep, 500
+TrayTip
+gosub, gesture_setup ; restore gui for gesture
+return 
+
+
+
+
+; capture2text OCR
+;    Win + alt then mouse drag capture to clipboard
+#!LButton::
+CoordMode, Mouse, Screen
+; CoordMode, Tooltip, Screen
+MouseGetPos, scan_x_start, scan_y_start
+; ToolTip, ., scan_x_start, scan_y_start
+; WinSet, Transparent, 100, ahk_class tooltips_class32
+
+Gui, Destroy ; destroy gesture gui
+Gui, +AlwaysOnTop -caption +Border +ToolWindow +LastFound
+WinSet, Transparent, 80
+Gui, Color, Green
+
+GetKeyState, PrtSc_AltState, Alt, P
+While, (GetKeyState("LButton", "p"))
+{
+  MouseGetPos, scan_x, scan_y
+  Send {control up}
+	if ( scan_x > scan_x_start )
+	{
+		scan_w := scan_x - scan_x_start
+		box_x := scan_x_start
+	}
+	else
+	{
+		scan_w := scan_x_start  - scan_x
+		box_x := scan_x
+	}
+	if ( scan_y > scan_y_start )
+	{
+		scan_h := scan_y - scan_y_start
+		box_y := scan_y_start
+	}
+	else
+	{
+		scan_h := scan_y_start  - scan_y
+		box_y := scan_y
+	}
+  Gui, Show, x%box_x% y%box_y% w%scan_w% h%scan_h%
+	; WinMove, ahk_class tooltips_class32, , %box_x%, %box_y%, %scan_w%, %scan_h%
+  ; GetKeyState, state, LButton, P
+	; if state=u
+	; {
+	; 	tooltip
+	; 	break
+	; }
+  Sleep, 50
+}
+; #############################
+
+CoordMode, Pixel, Screen
+CoordMode, Mouse, Screen
+MouseGetPos, scan_x_end, scan_y_end
+Gui, Destroy
+
+if ( scan_x_start > scan_x_end )
+{
+	temp 		 := scan_x_start
+	scan_x_start := scan_x_end
+	scan_x_end	 := temp
+}
+
+if ( PrtSc_AltState != "D" )
+{
+	savetofile := 0
+	tipmsg := "Capture2Text done ..."
+}	
+
+square_box = %scan_x_start%, %scan_y_start%, %scan_x_end%, %scan_y_end%
+Sleep, 100 ; if omitted, GUI sometimes stays in picture
+
+
+; CaptureScreen(square_box, False, savetofile, 100)
+RunWait, %A_ScriptDir%\..\..\..\Capture2Text\Capture2Text.exe -s "%scan_x_start% %scan_y_start% %scan_x_end% %scan_y_end%" --clipboard
 
 TrayTip, , %tipmsg%, , 1
 sleep, 500
