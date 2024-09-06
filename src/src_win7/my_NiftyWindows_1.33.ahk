@@ -79,7 +79,7 @@
 ; SendMessage, 0x9c44, 0x010064, 0, , ahk_class StrokeIt
 ; SendMessage, 0x405, 1, 0x204, , ahk_class StrokeIt
 ; SendMessage, 0x405, 1, 0x205, , ahk_class StrokeIt
-
+;
 
 FileInstall, readme.txt, %A_ScriptDir%\readme.txt
 FileInstall, license.txt, %A_ScriptDir%\license.txt
