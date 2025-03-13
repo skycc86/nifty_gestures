@@ -634,6 +634,7 @@ return
 
 ;placewindow
 #Space::
+span2monitor:
 	GoSub, mmove_check	
 	; WinGetPos, x, y, w, h, A
 	; ; Determine which monitor contains the center of the window.
@@ -643,10 +644,8 @@ return
 
 	if (ms==2)
 		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
-		; WinMove, ahk_id %SIZ_WinID%,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
 	else
 		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
-		; WinMove, ahk_id %SIZ_WinID%,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
 Return
 
 #!right::
@@ -655,9 +654,9 @@ Return
 	if(mmode = 0){
 		WinMove, A,, (maRight-maLeft)/2+m_offset, maTop, (maRight-maLeft)/2, (maBottom-maTop)
 	}else if(mmode = 1){
-		WinMove, A,, (maRight-maLeft)*2/3+m_offset, maTop, (maRight-maLeft)/3, (maBottom-maTop)
+		WinMove, A,, maLeft, maTop, (maRight-maLeft)/2, (maBottom-maTop)
 	}else if(mmode = 2){
-		WinMove, A,, (maRight-maLeft)/3+m_offset, maTop, (maRight-maLeft)*2/3, (maBottom-maTop)
+		WinMove, A,, maLeft, maTop, (maRight-maLeft), (maBottom-maTop)
 	}else if(mmode = 3){
 		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
 	}
@@ -671,9 +670,9 @@ return
 	if(mmode = 0){
 		WinMove, A,, maLeft, maTop, (maRight-maLeft)/2, (maBottom-maTop)
 	}else if(mmode = 1){
-		WinMove, A,, maLeft, maTop, (maRight-maLeft)/3, (maBottom-maTop)
+		WinMove, A,, (maRight-maLeft)/2+m_offset, maTop, (maRight-maLeft)/2, (maBottom-maTop)
 	}else if(mmode = 2){
-		WinMove, A,, maLeft, maTop, (maRight-maLeft)*2/3, (maBottom-maTop)
+		WinMove, A,, maLeft, maTop, (maRight-maLeft), (maBottom-maTop)
 	}else if(mmode = 3){
 		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
 	}

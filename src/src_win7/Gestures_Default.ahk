@@ -156,6 +156,11 @@ Default_L_R:
     GoSub, MoveToNextMonitorLeft
 return
 
+Default_L_R_L:
+Default_R_L_R:
+	GoSub, span2monitor
+return
+
 ; Default_L_D_U:
 Default_DL_U:
 ; Default_U_L_D_U: ; <-- compensate for bad habit
@@ -260,10 +265,10 @@ else
 return
 
 
-Default_L_R_L:
+Default_U_D_U:
 	Send, {Home}
 
-Default_R_L_R:
+Default_D_U_D:
 	Send, {End}
 
 ; W
@@ -313,11 +318,6 @@ Default_U_D_U_D:
 	Send, {F11}
 return
 
-; show desktop
-Default_U_D_U:
-	Send, #d
-return
-
 
 Default_D_L:
 if WinActive("ahk_group Browser")
@@ -348,7 +348,7 @@ Default_U_R:
 	Send, {Media_Next}
 return
 
-Default_D_U_D:
+Default_U_D_R:
 	Send, {Media_Play_Pause}
 return
 
