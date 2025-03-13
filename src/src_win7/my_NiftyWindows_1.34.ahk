@@ -409,21 +409,21 @@ toggletaskbar:
 return
 
 AUTOHIDE: ;Stolen from SKAN at http://www.autohotkey.com/forum/topic26107.html
-ABM_SETSTATE    := 10 
-ABS_NORMAL      := 0x0 
-ABS_AUTOHIDE    := 0x1 
-ABS_ALWAYSONTOP := 0x2 
-VarSetCapacity(APPBARDATA,36,0) 
-Off:=NumPut(36,APPBARDATA) 
-Off:=NumPut(WinExist("ahk_class Shell_TrayWnd"),Off+0) 
+	ABM_SETSTATE    := 10 
+	ABS_NORMAL      := 0x0 
+	ABS_AUTOHIDE    := 0x1 
+	ABS_ALWAYSONTOP := 0x2 
+	VarSetCapacity(APPBARDATA,36,0) 
+	Off:=NumPut(36,APPBARDATA) 
+	Off:=NumPut(WinExist("ahk_class Shell_TrayWnd"),Off+0) 
 
-NumPut(ABS_AUTOHIDE|ABS_ALWAYSONTOP, Off+24) 
-DllCall("Shell32.dll\SHAppBarMessage",UInt,ABM_SETSTATE,UInt,&APPBARDATA) 
+	NumPut(ABS_AUTOHIDE|ABS_ALWAYSONTOP, Off+24) 
+	DllCall("Shell32.dll\SHAppBarMessage",UInt,ABM_SETSTATE,UInt,&APPBARDATA) 
 Return
 
 NORMAL: 
-NumPut(ABS_ALWAYSONTOP,Off+24) 
-DllCall("Shell32.dll\SHAppBarMessage",UInt,ABM_SETSTATE,UInt,&APPBARDATA) 
+	NumPut(ABS_ALWAYSONTOP,Off+24) 
+	DllCall("Shell32.dll\SHAppBarMessage",UInt,ABM_SETSTATE,UInt,&APPBARDATA) 
 Return
 
 

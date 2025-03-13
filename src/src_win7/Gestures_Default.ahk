@@ -299,13 +299,10 @@ return
 
 
 Default_D_U:
-	Gosub, ROL_RollToggle
-return
-
-Default_D_U_R:
 	Gosub, AOT_SetToggle
 	Gosub, ROL_RollToggle
 return
+
 
 Default_U_D:
 	Send, {F5}
