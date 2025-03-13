@@ -588,12 +588,15 @@ return
 ; move window between left and right monitor, active window will be used
 
 #right::
+WinGet, mm, MinMax, A
 Gosub, MoveToNextMonitor
+if(mm = 0)
+    WinRestore, A
 return
 
 #left::
 WinGet, mm, MinMax, A
-Gosub, MoveToNextMonitor
+Gosub, MoveToNextMonitorLeft
 if(mm = 0)
     WinRestore, A
 return
@@ -629,80 +632,101 @@ return
 
 ; place window at right/left/top/down side within monitor, active window will be used
 
+;placewindow
+#Space::
+	GoSub, mmove_check	
+	; WinGetPos, x, y, w, h, A
+	; ; Determine which monitor contains the center of the window.
+	; ms := GetMonitorAt(x+w/2, y+h/2)
+	; WinRestore, A
+	; SysGet, ma, MonitorWorkArea, %ms%	; monitor work areas (excludes taskbar-reserved space.)
+
+	if (ms==2)
+		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+		; WinMove, ahk_id %SIZ_WinID%,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	else
+		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+		; WinMove, ahk_id %SIZ_WinID%,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+Return
+
 #!right::
-GoSub, mmove_check
+	GoSub, mmove_check
 
-if(mmode = 0){
-	WinMove, A,, (maRight-maLeft)/2+m_offset, maTop, (maRight-maLeft)/2, (maBottom-maTop)
-}else if(mmode = 1){
-	WinMove, A,, (maRight-maLeft)*2/3+m_offset, maTop, (maRight-maLeft)/3, (maBottom-maTop)
-}else if(mmode = 2){
-	WinMove, A,, (maRight-maLeft)/3+m_offset, maTop, (maRight-maLeft)*2/3, (maBottom-maTop)
-}
+	if(mmode = 0){
+		WinMove, A,, (maRight-maLeft)/2+m_offset, maTop, (maRight-maLeft)/2, (maBottom-maTop)
+	}else if(mmode = 1){
+		WinMove, A,, (maRight-maLeft)*2/3+m_offset, maTop, (maRight-maLeft)/3, (maBottom-maTop)
+	}else if(mmode = 2){
+		WinMove, A,, (maRight-maLeft)/3+m_offset, maTop, (maRight-maLeft)*2/3, (maBottom-maTop)
+	}else if(mmode = 3){
+		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	}
 
-;WinMove, A,, A_ScreenWidth/2, 0, A_ScreenWidth/2, A_ScreenHeight-10
+	;WinMove, A,, A_ScreenWidth/2, 0, A_ScreenWidth/2, A_ScreenHeight-10
 return
 
 #!left::
-GoSub, mmove_check
+	GoSub, mmove_check
 
-if(mmode = 0){
-	WinMove, A,, maLeft, maTop, (maRight-maLeft)/2, (maBottom-maTop)
-}else if(mmode = 1){
-	WinMove, A,, maLeft, maTop, (maRight-maLeft)/3, (maBottom-maTop)
-}else if(mmode = 2){
-	WinMove, A,, maLeft, maTop, (maRight-maLeft)*2/3, (maBottom-maTop)
-}
+	if(mmode = 0){
+		WinMove, A,, maLeft, maTop, (maRight-maLeft)/2, (maBottom-maTop)
+	}else if(mmode = 1){
+		WinMove, A,, maLeft, maTop, (maRight-maLeft)/3, (maBottom-maTop)
+	}else if(mmode = 2){
+		WinMove, A,, maLeft, maTop, (maRight-maLeft)*2/3, (maBottom-maTop)
+	}else if(mmode = 3){
+		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	}
 
-;WinMove, A,, 0, 0, A_ScreenWidth/2, A_ScreenHeight-10
+	;WinMove, A,, 0, 0, A_ScreenWidth/2, A_ScreenHeight-10
 return
 
 #!up::
-GoSub, mmove_check
+	GoSub, mmove_check
 
-if(mmode = 0){
-	WinMove, A,, maLeft, maTop, (maRight-maLeft), (maBottom-maTop)/2
-}else if(mmode = 1){
-	WinMove, A,, maLeft, maTop, (maRight-maLeft)/2, (maBottom-maTop)/2
-}else if(mmode = 2){
-	WinMove, A,, (maRight-maLeft)/2+m_offset, maTop, (maRight-maLeft)/2, (maBottom-maTop)/2
-}
-;WinMove, A,, 0, 0, A_ScreenWidth, A_ScreenHeight/2-10
+	if(mmode = 0){
+		WinMove, A,, maLeft, maTop, (maRight-maLeft), (maBottom-maTop)/2
+	}else if(mmode = 1){
+		WinMove, A,, maLeft, maTop, (maRight-maLeft)/2, (maBottom-maTop)/2
+	}else if(mmode = 2){
+		WinMove, A,, (maRight-maLeft)/2+m_offset, maTop, (maRight-maLeft)/2, (maBottom-maTop)/2
+	}
+	;WinMove, A,, 0, 0, A_ScreenWidth, A_ScreenHeight/2-10
 return
 
 #!down::
-GoSub, mmove_check
+	GoSub, mmove_check
 
-if(mmode = 0){
-	WinMove, A,, maLeft, (maBottom+maTop)/2, (maRight-maLeft), (maBottom-maTop)/2
-}else if(mmode = 1){
-	WinMove, A,, maLeft, (maBottom+maTop)/2, (maRight-maLeft)/2, (maBottom-maTop)/2
-}else if(mmode = 2){
-	WinMove, A,, (maRight-maLeft)/2+m_offset, (maBottom+maTop)/2, (maRight-maLeft)/2, (maBottom-maTop)/2
-}
-;WinMove, A,, 0, A_ScreenHeight/2-10, A_ScreenWidth,  A_ScreenHeight/2-20
+	if(mmode = 0){
+		WinMove, A,, maLeft, (maBottom+maTop)/2, (maRight-maLeft), (maBottom-maTop)/2
+	}else if(mmode = 1){
+		WinMove, A,, maLeft, (maBottom+maTop)/2, (maRight-maLeft)/2, (maBottom-maTop)/2
+	}else if(mmode = 2){
+		WinMove, A,, (maRight-maLeft)/2+m_offset, (maBottom+maTop)/2, (maRight-maLeft)/2, (maBottom-maTop)/2
+	}
+	;WinMove, A,, 0, A_ScreenHeight/2-10, A_ScreenWidth,  A_ScreenHeight/2-20
 return
 
 mmove_check:
-If (A_PriorHotKey = A_ThisHotKey and mmode < 2)
-	mmode++
-else
-	mmode=0
-WinGetPos, x, y, w, h, A
-; Determine which monitor contains the center of the window.
-ms := GetMonitorAt(x+w/2, y+h/2)
+	If ((A_PriorHotKey = A_ThisHotKey) and ((mc == 2 and mmode < 2) or (mc == 3 and mmode < 3)))
+		mmode++
+	else
+		mmode=0
+	WinGetPos, x, y, w, h, A
+	; Determine which monitor contains the center of the window.
+	ms := GetMonitorAt(x+w/2, y+h/2)
 
-WinRestore, A
-SysGet, ma, MonitorWorkArea, %ms%	; monitor work areas (excludes taskbar-reserved space.)
+	WinRestore, A
+	SysGet, ma, MonitorWorkArea, %ms%	; monitor work areas (excludes taskbar-reserved space.)
 
-if(ms=2){
-	if(maLeft>0){		; 2nd monitor at Right side
-		m_offset = %A_ScreenWidth%
-	}else{				; 2nd monitor at Left side
-		m_offset = %maLeft%
-	}
-}else{
-	m_offset = 0
+	if(ms=2){
+		if(maLeft>0){		; 2nd monitor at Right side
+			m_offset = %A_ScreenWidth%
+		}else{				; 2nd monitor at Left side
+			m_offset = %maLeft%
+		}
+	}else{
+		m_offset = 0
 }
 return
 
@@ -732,11 +756,21 @@ MoveToNextMonitor:
 	if (mc = 1)
 		return
 	
-    ; Determine which monitor to move to.
-	if ( ms = 1 )
-		md := 2
-	else
-		md := 1
+	if (mc==2) {
+		; Determine which monitor to move to.
+		if ( ms = 1 )
+			md := 2
+		else
+			md := 1
+	}else if (mc == 3){
+		; Determine which monitor to move to.
+		if ( ms = 1 )
+			md := 2
+		else if ( ms ==2 )
+			md := 3
+		else
+			md := 1
+	}
 		
 	; Get source and destination work areas (excludes taskbar-reserved space.)
     SysGet, ms, MonitorWorkArea, %ms%
@@ -755,6 +789,46 @@ MoveToNextMonitor:
 	WinMaximize, A
 return
 
-
+MoveToNextMonitorLeft:
+	WinGetPos, x, y, w, h, A
+    ; Determine which monitor contains the center of the window.
+    ms := GetMonitorAt(x+w/2, y+h/2)
+	
+	; This may happen if someone tries it with only one screen
+	if (mc = 1)
+		return
+	
+	if (mc==2) {
+		; Determine which monitor to move to.
+		if ( ms = 1 )
+			md := 2
+		else
+			md := 1
+	}else if (mc == 3){
+		; Determine which monitor to move to.
+		if ( ms = 1 )
+			md := 3
+		else if ( ms == 3 )
+			md := 2
+		else
+			md := 1
+	}
+		
+	; Get source and destination work areas (excludes taskbar-reserved space.)
+    SysGet, ms, MonitorWorkArea, %ms%
+    SysGet, md, MonitorWorkArea, %md%
+    msw := msRight - msLeft, msh := msBottom - msTop
+    mdw := mdRight - mdLeft, mdh := mdBottom - mdTop
+	
+	w *= (mdw/msw)
+    h *= (mdh/msh)
+	
+	SetWinDelay, -1
+	; Move window, using resolution difference to scale co-ordinates.
+	WinRestore, A
+    ; WinMaximize, A 
+	WinMove, A,, mdLeft + (x-msLeft)*(mdw/msw), mdTop + (y-msTop)*(mdh/msh), w, h
+	WinMaximize, A
+return
 
 ; #############################################################################################

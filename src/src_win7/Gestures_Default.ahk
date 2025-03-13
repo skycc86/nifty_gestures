@@ -149,8 +149,11 @@ return
 
 ; skycc - modified
 Default_R_L:
-Default_L_R:
     GoSub, MoveToNextMonitor
+return
+
+Default_L_R:
+    GoSub, MoveToNextMonitorLeft
 return
 
 ; Default_L_D_U:
