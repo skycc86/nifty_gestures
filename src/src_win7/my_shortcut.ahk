@@ -41,25 +41,25 @@ winhide2:=0
 winhideid=
 winhide2id=
 #h::
-winhide := !winhide
-if (winhide = 1) {
-  WinGet, winhideid, ID, A
-  WinHide, ahk_id %winhideid%
-} else {
-  WinShow, ahk_id %winhideid%
-  WinActivate, ahk_id %winhideid%
-}
+	winhide := !winhide
+	if (winhide = 1) {
+	  WinGet, winhideid, ID, A
+	  WinHide, ahk_id %winhideid%
+	} else {
+	  WinShow, ahk_id %winhideid%
+	  WinActivate, ahk_id %winhideid%
+	}
 return
 
 ^#h::
-winhide2 := !winhide2
-if (winhide2 = 1) {
-  WinGet, winhide2id, ID, A
-  WinHide, ahk_id %winhide2id%
-} else {
-  WinShow, ahk_id %winhide2id%
-  WinActivate, ahk_id %winhide2id%
-}
+	winhide2 := !winhide2
+	if (winhide2 = 1) {
+	  WinGet, winhide2id, ID, A
+	  WinHide, ahk_id %winhide2id%
+	} else {
+	  WinShow, ahk_id %winhide2id%
+	  WinActivate, ahk_id %winhide2id%
+	}
 return
 
 
@@ -67,56 +67,56 @@ return
 
 CapsLock up::
 autocompletion:
-if A_ThisHotkey != %A_PriorHotkey%
-  return
-Input, UserInput, T5 L%SYS_aliaslen% C, {space}{tab}{esc}{enter}, *
-;if ErrorLevel = Max
-;{
-;  SYS_ToolTipText = You entered "%UserInput%", which is the maximum length of text.
-;  Gosub, SYS_ToolTipFeedbackShow
-;  return
-;}
-;if ErrorLevel = Timeout
-;{
-;  SYS_ToolTipText = You entered "%UserInput%" at which time the input timed out.
-;  Gosub, SYS_ToolTipFeedbackShow
-;  return
-;}
-if ErrorLevel = NewInput
-    return
+	if A_ThisHotkey != %A_PriorHotkey%
+	  return
+	Input, UserInput, T5 L%SYS_aliaslen% C, {space}{tab}{esc}{enter}, *
+	;if ErrorLevel = Max
+	;{
+	;  SYS_ToolTipText = You entered "%UserInput%", which is the maximum length of text.
+	;  Gosub, SYS_ToolTipFeedbackShow
+	;  return
+	;}
+	;if ErrorLevel = Timeout
+	;{
+	;  SYS_ToolTipText = You entered "%UserInput%" at which time the input timed out.
+	;  Gosub, SYS_ToolTipFeedbackShow
+	;  return
+	;}
+	if ErrorLevel = NewInput
+		return
 
-; Otherwise, a match was found.
-SetKeyDelay, -1  ; Most editors can handle the fastest speed.
-compmatch=0
-Loop, parse, CompletionsL, `,
-{
-    if UserInput = %A_LoopField%
-    {
-      compmatch=1
-      if IsLabel(CompletionsR%A_Index%)
-        gosub % CompletionsR%A_Index%
-      else if RegExMatch(CompletionsR%A_Index%,"^run_(.*)",matchrun)
-        Run, % matchrun1
-      else  
-        Send, % CompletionsR%A_Index%
-    }
-}
+	; Otherwise, a match was found.
+	SetKeyDelay, -1  ; Most editors can handle the fastest speed.
+	compmatch=0
+	Loop, parse, CompletionsL, `,
+	{
+		if UserInput = %A_LoopField%
+		{
+		  compmatch=1
+		  if IsLabel(CompletionsR%A_Index%)
+			gosub % CompletionsR%A_Index%
+		  else if RegExMatch(CompletionsR%A_Index%,"^run_(.*)",matchrun)
+			Run, % matchrun1
+		  else  
+			Send, % CompletionsR%A_Index%
+		}
+	}
 
-if compmatch=0
-  if UserInput!=
-  {
-    SYS_ToolTipText = You entered "%UserInput%" which is no match !!!
-    Gosub, SYS_ToolTipFeedbackShow
-  }  
+	if compmatch=0
+	  if UserInput!=
+	  {
+		SYS_ToolTipText = You entered "%UserInput%" which is no match !!!
+		Gosub, SYS_ToolTipFeedbackShow
+	  }  
 return
 
  
 $tab::
-GetKeyState, CapsState, CapsLock, P
-if ( CapsState = "D" )
-	Gosub, CAPSMENU
-else  
-	Send, {tab}
+	GetKeyState, CapsState, CapsLock, P
+	if ( CapsState = "D" )
+		Gosub, CAPSMENU
+	else  
+		Send, {tab}
 return	
 
 /*
@@ -129,163 +129,163 @@ return
 
 
 CAPSMENU:
-Menu,convert,Add
-Menu,convert,Delete
-Menu,convert,Add,CAPStoggle,CAPSTOGGLE
-Menu,convert,Add,
-Menu,Convert,Add,CapsLock &On,CAPSON
-Menu,Convert,Add,&CapsLock Off,CAPSOFF
-Menu,convert,Add,
-Menu,convert,Add,&UPPER CASE,UPPER
-Menu,convert,Add,&lower case,LOWER
-Menu,convert,Add,&Title Case,TITLE
-Menu,convert,Add,&iNVERT cASE,INVERT
-;Menu,convert,Default,CapShift
-Menu,convert,Show
+	Menu,convert,Add
+	Menu,convert,Delete
+	Menu,convert,Add,CAPStoggle,CAPSTOGGLE
+	Menu,convert,Add,
+	Menu,Convert,Add,CapsLock &On,CAPSON
+	Menu,Convert,Add,&CapsLock Off,CAPSOFF
+	Menu,convert,Add,
+	Menu,convert,Add,&UPPER CASE,UPPER
+	Menu,convert,Add,&lower case,LOWER
+	Menu,convert,Add,&Title Case,TITLE
+	Menu,convert,Add,&iNVERT cASE,INVERT
+	;Menu,convert,Default,CapShift
+	Menu,convert,Show
 Return
 
 CAPSON:
-SetCapsLockState,On
-SYS_ToolTipText = Capslock On
-Gosub, SYS_ToolTipFeedbackShow
+	SetCapsLockState,On
+	SYS_ToolTipText = Capslock On
+	Gosub, SYS_ToolTipFeedbackShow
 Return
 
 
 CAPSOFF:
-SetCapsLockState,Off
-SYS_ToolTipText = Capslock Off
-Gosub, SYS_ToolTipFeedbackShow
+	SetCapsLockState,Off
+	SYS_ToolTipText = Capslock Off
+	Gosub, SYS_ToolTipFeedbackShow
 Return
 
 CAPSTOGGLE:
-GetKeyState,state,CapsLock,T
-If state=D
-{
-  SetCapsLockState,Off
-  SYS_ToolTipText = Capslock Off
-}
-Else
-{
-  SetCapsLockState,On
-  SYS_ToolTipText = Capslock On
-}
-Gosub, SYS_ToolTipFeedbackShow
+	GetKeyState,state,CapsLock,T
+	If state=D
+	{
+	  SetCapsLockState,Off
+	  SYS_ToolTipText = Capslock Off
+	}
+	Else
+	{
+	  SetCapsLockState,On
+	  SYS_ToolTipText = Capslock On
+	}
+	Gosub, SYS_ToolTipFeedbackShow
 Return
 
 
 STRCUT:
-oldclipboard:=ClipboardAll
-WinActivate,ahk_id %id%
-WinWaitActive,ahk_id %id%,,1
-WinGetClass,class,ahk_id %id%
-If class In Progman,WorkerW,Explorer,CabinetWClass
-  Send,{F2}
-Send,^x
-Sleep,30
-ClipWait,1
-string=%clipboard%
-; SYS_ToolTipText = %string%
-; Gosub, SYS_ToolTipFeedbackShow
+	oldclipboard:=ClipboardAll
+	WinActivate,ahk_id %id%
+	WinWaitActive,ahk_id %id%,,1
+	WinGetClass,class,ahk_id %id%
+	If class In Progman,WorkerW,Explorer,CabinetWClass
+	  Send,{F2}
+	Send,^x
+	Sleep,30
+	ClipWait,1
+	string=%clipboard%
+	; SYS_ToolTipText = %string%
+	; Gosub, SYS_ToolTipFeedbackShow
 Return
 
 
 PASTESTR:
-WinActivate,ahk_id %id%
-WinWaitActive,ahk_id %id%,,1
-If class In Progman,WorkerW,Explorer,CabinetWClass
-  Send,{F2}
-clipboard=%string%
-Send,^v
-Sleep,30
-Clipboard:=oldclipboard
-oldclipboard=
+	WinActivate,ahk_id %id%
+	WinWaitActive,ahk_id %id%,,1
+	If class In Progman,WorkerW,Explorer,CabinetWClass
+	  Send,{F2}
+	clipboard=%string%
+	Send,^v
+	Sleep,30
+	Clipboard:=oldclipboard
+	oldclipboard=
 Return
 
 
 UPPER:
-Gosub,STRCUT
-StringUpper,string,string
-Gosub,PASTESTR
-SYS_ToolTipText = Selection converted to UPPER CASE
-Gosub, SYS_ToolTipFeedbackShow
-string=
+	Gosub,STRCUT
+	StringUpper,string,string
+	Gosub,PASTESTR
+	SYS_ToolTipText = Selection converted to UPPER CASE
+	Gosub, SYS_ToolTipFeedbackShow
+	string=
 Return
 
 
 LOWER:
-Gosub,STRCUT
-StringLower,string,string
-Gosub,PASTESTR
-SYS_ToolTipText = Selection converted to lower CASE
-Gosub, SYS_ToolTipFeedbackShow
-string=
+	Gosub,STRCUT
+	StringLower,string,string
+	Gosub,PASTESTR
+	SYS_ToolTipText = Selection converted to lower CASE
+	Gosub, SYS_ToolTipFeedbackShow
+	string=
 Return
 
 
 TITLE:
-Gosub,STRCUT
-StringLower,string,string,T
-Gosub,PASTESTR
-SYS_ToolTipText = Selection converted to Title CASE
-Gosub, SYS_ToolTipFeedbackShow
+	Gosub,STRCUT
+	StringLower,string,string,T
+	Gosub,PASTESTR
+	SYS_ToolTipText = Selection converted to Title CASE
+	Gosub, SYS_ToolTipFeedbackShow
 string=
 Return
 
 
 INVERT:
-Gosub,STRCUT
-StringLen,length,string
-Loop,%length%
-{
-  StringLeft,char,string,1
-  If char Is Upper
-    StringLower,char,char
-  Else
-  If char Is Lower
-    StringUpper,char,char
-  StringTrimLeft,string,string,1
-  string=%string%%char%
-}
-Gosub,PASTESTR
-SYS_ToolTipText = Selection converted to iNVERTED CASE
-Gosub, SYS_ToolTipFeedbackShow
-string=
+	Gosub,STRCUT
+	StringLen,length,string
+	Loop,%length%
+	{
+	  StringLeft,char,string,1
+	  If char Is Upper
+		StringLower,char,char
+	  Else
+	  If char Is Lower
+		StringUpper,char,char
+	  StringTrimLeft,string,string,1
+	  string=%string%%char%
+	}
+	Gosub,PASTESTR
+	SYS_ToolTipText = Selection converted to iNVERTED CASE
+	Gosub, SYS_ToolTipFeedbackShow
+	string=
 Return
 
 
 ; disable this for onenote
 #IfWinNotActive, ahk_class Framework::CFrame
 $up::
-GetKeyState, CapsState, CapsLock, P
-if ( CapsState = "D" )
-	Send, {WheelUp}
-else
-	Send, {up}
+	GetKeyState, CapsState, CapsLock, P
+	if ( CapsState = "D" )
+		Send, {WheelUp}
+	else
+		Send, {up}
 return
 
 $down::
-GetKeyState, CapsState, CapsLock, P
-if ( CapsState = "D" )
-	Send, {WheelDown}
-else
-	Send, {down}
+	GetKeyState, CapsState, CapsLock, P
+	if ( CapsState = "D" )
+		Send, {WheelDown}
+	else
+		Send, {down}
 return
 #IfWinNotActive
 
 $left::
-GetKeyState, CapsState, CapsLock, P
-if ( CapsState = "D" )
-	Send, {WheelLeft}
-else
-	Send, {left}
+	GetKeyState, CapsState, CapsLock, P
+	if ( CapsState = "D" )
+		Send, {WheelLeft}
+	else
+		Send, {left}
 return
 
 $right::
-GetKeyState, CapsState, CapsLock, P
-if ( CapsState = "D" )
-	Send, {WheelRight}
-else
-	Send, {right}
+	GetKeyState, CapsState, CapsLock, P
+	if ( CapsState = "D" )
+		Send, {WheelRight}
+	else
+		Send, {right}
 return
 
 ; Top 3 favourite Apps / Directory
@@ -336,16 +336,16 @@ return
 ; Turn Monitor Off
 +Esc::
 OffMonitor:
-Sleep 1500  ; Give user a chance to release keys (in case their release would wake up the monitor again).
-SendMessage, 0x112, 0xF170, 2,, Program Manager  ; 0x112 is WM_SYSCOMMAND, 0xF170 is SC_MONITORPOWER.
-; lparam : -1 (the display is powering on), 1 (the display is going to low power), 2 (the display is being shut off)
+	Sleep 1500  ; Give user a chance to release keys (in case their release would wake up the monitor again).
+	SendMessage, 0x112, 0xF170, 2,, Program Manager  ; 0x112 is WM_SYSCOMMAND, 0xF170 is SC_MONITORPOWER.
+	; lparam : -1 (the display is powering on), 1 (the display is going to low power), 2 (the display is being shut off)
 return
 
 
 ; Lock PC then turn off monitor
 ^#l::
-Send, #l
-gosub, OffMonitor
+	Send, #l
+	gosub, OffMonitor
 return
 
 
@@ -367,39 +367,39 @@ return
 ; open selected text(web link) in new tab
 #ifWinActive, ahk_group Editor2
 #Tab::
-;MouseGetPos, , , t_WinID
-;WinGetClass, t_WinClass, ahk_id %t_WinID%
-;if ( (t_WinClass != "IEFrame") and ( t_WinClass != "MozillaUIWindowClass") )
-;	return
-	ClipTemp = %Clipboard%
-	Clipboard := ""		; clear
-		Send, ^c
-		ClipWait, 0
-		Send, ^t
-		Sleep 200
-		Send, ^v
-		Send, {enter}
-		Sleep 500
-	Clipboard = %ClipTemp%
+	;MouseGetPos, , , t_WinID
+	;WinGetClass, t_WinClass, ahk_id %t_WinID%
+	;if ( (t_WinClass != "IEFrame") and ( t_WinClass != "MozillaUIWindowClass") )
+	;	return
+		ClipTemp = %Clipboard%
+		Clipboard := ""		; clear
+			Send, ^c
+			ClipWait, 0
+			Send, ^t
+			Sleep 200
+			Send, ^v
+			Send, {enter}
+			Sleep 500
+		Clipboard = %ClipTemp%
 return
 #ifWinActive
 
 ; capture full screen to desktop_PrtSc.jpg
 #PrintScreen::
-CaptureScreen(0, True, A_Desktop . "\desktop_PrtSc.jpg", 100)
+	CaptureScreen(0, True, A_Desktop . "\desktop_PrtSc.jpg", 100)
 return
 
 ; capture active window to desktop_PrtSc.jpg
 ^PrintScreen::
-CaptureScreen(1, True, A_Desktop . "\desktop_PrtSc.jpg", 100)
+	CaptureScreen(1, True, A_Desktop . "\desktop_PrtSc.jpg", 100)
 return
 
 ; screen capture
 ^#p::
-Send !{PrintScreen}
-Run, mspaint.exe
-WinWaitActive, untitled - Paint
-    Send ^v
+	Send !{PrintScreen}
+	Run, mspaint.exe
+	WinWaitActive, untitled - Paint
+		Send ^v
 return
 
 
@@ -409,93 +409,93 @@ return
 ^+LButton::
 ^!LButton::
 ;#persistent
-CoordMode, Mouse, Screen
-; CoordMode, Tooltip, Screen
-MouseGetPos, scan_x_start, scan_y_start
-; ToolTip, ., scan_x_start, scan_y_start
-; WinSet, Transparent, 100, ahk_class tooltips_class32
+	CoordMode, Mouse, Screen
+	; CoordMode, Tooltip, Screen
+	MouseGetPos, scan_x_start, scan_y_start
+	; ToolTip, ., scan_x_start, scan_y_start
+	; WinSet, Transparent, 100, ahk_class tooltips_class32
 
-Gui, Destroy ; destroy gesture gui
-Gui, +AlwaysOnTop -caption +Border +ToolWindow +LastFound
-WinSet, Transparent, 80
-Gui, Color, Fuchsia
+	Gui, Destroy ; destroy gesture gui
+	Gui, +AlwaysOnTop -caption +Border +ToolWindow +LastFound
+	WinSet, Transparent, 80
+	Gui, Color, Fuchsia
 
-GetKeyState, PrtSc_AltState, Alt, P
-While, (GetKeyState("LButton", "p"))
-{
-  MouseGetPos, scan_x, scan_y
-  Send {control up}
-	if ( scan_x > scan_x_start )
+	GetKeyState, PrtSc_AltState, Alt, P
+	While, (GetKeyState("LButton", "p"))
 	{
-		scan_w := scan_x - scan_x_start
-		box_x := scan_x_start
+	  MouseGetPos, scan_x, scan_y
+	  Send {control up}
+		if ( scan_x > scan_x_start )
+		{
+			scan_w := scan_x - scan_x_start
+			box_x := scan_x_start
+		}
+		else
+		{
+			scan_w := scan_x_start  - scan_x
+			box_x := scan_x
+		}
+		if ( scan_y > scan_y_start )
+		{
+			scan_h := scan_y - scan_y_start
+			box_y := scan_y_start
+		}
+		else
+		{
+			scan_h := scan_y_start  - scan_y
+			box_y := scan_y
+		}
+	  Gui, Show, x%box_x% y%box_y% w%scan_w% h%scan_h%
+		; WinMove, ahk_class tooltips_class32, , %box_x%, %box_y%, %scan_w%, %scan_h%
+	  ; GetKeyState, state, LButton, P
+		; if state=u
+		; {
+		; 	tooltip
+		; 	break
+		; }
+	  Sleep, 50
+	}
+	; #############################
+
+	CoordMode, Pixel, Screen
+	CoordMode, Mouse, Screen
+	MouseGetPos, scan_x_end, scan_y_end
+	Gui, Destroy
+
+	if ( scan_x_start > scan_x_end )
+	{
+		temp 		 := scan_x_start
+		scan_x_start := scan_x_end
+		scan_x_end	 := temp
+	}
+	if ( scan_y_start > scan_y_end )
+	{
+		temp 		 := scan_y_start
+		scan_y_start := scan_y_end
+		scan_y_end	 := temp
+		savetofile := A_Desktop . "\screen.jpg"
+		tipmsg := "save to screen.jpg ..."
 	}
 	else
 	{
-		scan_w := scan_x_start  - scan_x
-		box_x := scan_x
+		savetofile := A_Desktop . "\screen.bmp"
+		tipmsg := "save to screen.bmp ..."
 	}
-	if ( scan_y > scan_y_start )
+
+	if ( PrtSc_AltState != "D" )
 	{
-		scan_h := scan_y - scan_y_start
-		box_y := scan_y_start
-	}
-	else
-	{
-		scan_h := scan_y_start  - scan_y
-		box_y := scan_y
-	}
-  Gui, Show, x%box_x% y%box_y% w%scan_w% h%scan_h%
-	; WinMove, ahk_class tooltips_class32, , %box_x%, %box_y%, %scan_w%, %scan_h%
-  ; GetKeyState, state, LButton, P
-	; if state=u
-	; {
-	; 	tooltip
-	; 	break
-	; }
-  Sleep, 50
-}
-; #############################
+		savetofile := 0
+		tipmsg := "print Screen done ..."
+	}	
 
-CoordMode, Pixel, Screen
-CoordMode, Mouse, Screen
-MouseGetPos, scan_x_end, scan_y_end
-Gui, Destroy
+	square_box = %scan_x_start%, %scan_y_start%, %scan_x_end%, %scan_y_end%
+	Sleep, 100 ; if omitted, GUI sometimes stays in picture
+	CaptureScreen(square_box, False, savetofile, 100)
 
-if ( scan_x_start > scan_x_end )
-{
-	temp 		 := scan_x_start
-	scan_x_start := scan_x_end
-	scan_x_end	 := temp
-}
-if ( scan_y_start > scan_y_end )
-{
-	temp 		 := scan_y_start
-	scan_y_start := scan_y_end
-	scan_y_end	 := temp
-	savetofile := A_Desktop . "\screen.jpg"
-	tipmsg := "save to screen.jpg ..."
-}
-else
-{
-	savetofile := A_Desktop . "\screen.bmp"
-	tipmsg := "save to screen.bmp ..."
-}
-
-if ( PrtSc_AltState != "D" )
-{
-	savetofile := 0
-	tipmsg := "print Screen done ..."
-}	
-
-square_box = %scan_x_start%, %scan_y_start%, %scan_x_end%, %scan_y_end%
-Sleep, 100 ; if omitted, GUI sometimes stays in picture
-CaptureScreen(square_box, False, savetofile, 100)
-
-TrayTip, , %tipmsg%, , 1
-sleep, 500
-TrayTip
-gosub, gesture_setup ; restore gui for gesture
+	TrayTip, , %tipmsg%, , 1
+	sleep, 1000
+	TrayTip
+	gosub, gesture_setup ; restore gui for gesture
 return 
 
 
@@ -504,83 +504,81 @@ return
 ; capture2text OCR
 ;    Win + alt then mouse drag capture to clipboard
 #!LButton::
-CoordMode, Mouse, Screen
-; CoordMode, Tooltip, Screen
-MouseGetPos, scan_x_start, scan_y_start
-; ToolTip, ., scan_x_start, scan_y_start
-; WinSet, Transparent, 100, ahk_class tooltips_class32
+	CoordMode, Mouse, Screen
+	; CoordMode, Tooltip, Screen
+	MouseGetPos, scan_x_start, scan_y_start
+	; ToolTip, ., scan_x_start, scan_y_start
+	; WinSet, Transparent, 100, ahk_class tooltips_class32
 
-Gui, Destroy ; destroy gesture gui
-Gui, +AlwaysOnTop -caption +Border +ToolWindow +LastFound
-WinSet, Transparent, 80
-Gui, Color, Green
+	Gui, Destroy ; destroy gesture gui
+	Gui, +AlwaysOnTop -caption +Border +ToolWindow +LastFound
+	WinSet, Transparent, 80
+	Gui, Color, Green
 
-GetKeyState, PrtSc_AltState, Alt, P
-While, (GetKeyState("LButton", "p"))
-{
-  MouseGetPos, scan_x, scan_y
-  Send {control up}
-	if ( scan_x > scan_x_start )
+	GetKeyState, PrtSc_AltState, Alt, P
+	While, (GetKeyState("LButton", "p"))
 	{
-		scan_w := scan_x - scan_x_start
-		box_x := scan_x_start
+	  MouseGetPos, scan_x, scan_y
+	  Send {control up}
+		if ( scan_x > scan_x_start )
+		{
+			scan_w := scan_x - scan_x_start
+			box_x := scan_x_start
+		}
+		else
+		{
+			scan_w := scan_x_start  - scan_x
+			box_x := scan_x
+		}
+		if ( scan_y > scan_y_start )
+		{
+			scan_h := scan_y - scan_y_start
+			box_y := scan_y_start
+		}
+		else
+		{
+			scan_h := scan_y_start  - scan_y
+			box_y := scan_y
+		}
+	  Gui, Show, x%box_x% y%box_y% w%scan_w% h%scan_h%
+		; WinMove, ahk_class tooltips_class32, , %box_x%, %box_y%, %scan_w%, %scan_h%
+	  ; GetKeyState, state, LButton, P
+		; if state=u
+		; {
+		; 	tooltip
+		; 	break
+		; }
+	  Sleep, 50
 	}
-	else
-	{
-		scan_w := scan_x_start  - scan_x
-		box_x := scan_x
-	}
-	if ( scan_y > scan_y_start )
-	{
-		scan_h := scan_y - scan_y_start
-		box_y := scan_y_start
-	}
-	else
-	{
-		scan_h := scan_y_start  - scan_y
-		box_y := scan_y
-	}
-  Gui, Show, x%box_x% y%box_y% w%scan_w% h%scan_h%
-	; WinMove, ahk_class tooltips_class32, , %box_x%, %box_y%, %scan_w%, %scan_h%
-  ; GetKeyState, state, LButton, P
-	; if state=u
-	; {
-	; 	tooltip
-	; 	break
-	; }
-  Sleep, 50
-}
-; #############################
+	; #############################
 
-CoordMode, Pixel, Screen
-CoordMode, Mouse, Screen
-MouseGetPos, scan_x_end, scan_y_end
-Gui, Destroy
+	CoordMode, Pixel, Screen
+	CoordMode, Mouse, Screen
+	MouseGetPos, scan_x_end, scan_y_end
+	Gui, Destroy
 
-if ( scan_x_start > scan_x_end )
-{
-	temp 		 := scan_x_start
-	scan_x_start := scan_x_end
-	scan_x_end	 := temp
-}
+	if ( scan_x_start > scan_x_end )
+	{
+		temp 		 := scan_x_start
+		scan_x_start := scan_x_end
+		scan_x_end	 := temp
+	}
 
-if ( PrtSc_AltState != "D" )
-{
-	savetofile := 0
+
 	tipmsg := "Capture2Text done ..."
-}	
+		
 
-square_box = %scan_x_start%, %scan_y_start%, %scan_x_end%, %scan_y_end%
-Sleep, 100 ; if omitted, GUI sometimes stays in picture
+	square_box = %scan_x_start%, %scan_y_start%, %scan_x_end%, %scan_y_end%
+	Sleep, 100 ; if omitted, GUI sometimes stays in picture
 
 
-; CaptureScreen(square_box, False, savetofile, 100)
-RunWait, %A_ScriptDir%\..\Capture2Text\Capture2Text.exe -s "%scan_x_start% %scan_y_start% %scan_x_end% %scan_y_end%" --clipboard
+	; CaptureScreen(square_box, False, savetofile, 100)
+	RunWait, %A_ScriptDir%\..\Capture2Text\Capture2Text.exe -s "%scan_x_start% %scan_y_start% %scan_x_end% %scan_y_end%" --clipboard
 
-TrayTip, , %tipmsg%, , 1
-sleep, 500
-TrayTip
-gosub, gesture_setup ; restore gui for gesture
+	TrayTip, , %tipmsg%, , 1
+	sleep, 1000
+	TrayTip
+	gosub, gesture_setup ; restore gui for gesture
 return 
 
 
@@ -588,46 +586,46 @@ return
 ; move window between left and right monitor, active window will be used
 
 #right::
-WinGet, mm, MinMax, A
-Gosub, MoveToNextMonitorRight
-if(mm = 0)
-    WinRestore, A
+	WinGet, mm, MinMax, A
+	Gosub, MoveToNextMonitorRight
+	if(mm = 0)
+		WinRestore, A
 return
 
 #left::
-WinGet, mm, MinMax, A
-Gosub, MoveToNextMonitorLeft
-if(mm = 0)
-    WinRestore, A
+	WinGet, mm, MinMax, A
+	Gosub, MoveToNextMonitorLeft
+	if(mm = 0)
+		WinRestore, A
 return
 
 ; minize / maximize window, active window will be used
 
 ; maximize / restore toggle
 #up::
-MouseGetPos,,, cur_WinID
-WinGetClass, cur_WinClass, ahk_id %cur_WinID%
-if ( (cur_WinClass = "Progman") or (cur_WinClass = "WorkerW") )
+	MouseGetPos,,, cur_WinID
+	WinGetClass, cur_WinClass, ahk_id %cur_WinID%
+	if ( (cur_WinClass = "Progman") or (cur_WinClass = "WorkerW") )
+		return
+	WinGet, mm, MinMax, A
+	if (mm = 1)
+	{
+		WinRestore, A
+		return
+	}
+	WinMaximize, A
+	SYS_ToolTipText = Window Maximize
+	Gosub, SYS_ToolTipFeedbackShow
 	return
-WinGet, mm, MinMax, A
-if (mm = 1)
-{
-	WinRestore, A
-	return
-}
-WinMaximize, A
-SYS_ToolTipText = Window Maximize
-Gosub, SYS_ToolTipFeedbackShow
-return
 
-#down::
-MouseGetPos,,, cur_WinID
-WinGetClass, cur_WinClass, ahk_id %cur_WinID%
-if ( (cur_WinClass = "Progman") or (cur_WinClass = "WorkerW") )
-	return
-WinMinimize, A
-SYS_ToolTipText = Window Minimize
-Gosub, SYS_ToolTipFeedbackShow
+	#down::
+	MouseGetPos,,, cur_WinID
+	WinGetClass, cur_WinClass, ahk_id %cur_WinID%
+	if ( (cur_WinClass = "Progman") or (cur_WinClass = "WorkerW") )
+		return
+	WinMinimize, A
+	SYS_ToolTipText = Window Minimize
+	Gosub, SYS_ToolTipFeedbackShow
 return
 
 ; place window at right/left/top/down side within monitor, active window will be used
