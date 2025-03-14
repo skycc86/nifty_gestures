@@ -589,7 +589,7 @@ return
 
 #right::
 WinGet, mm, MinMax, A
-Gosub, MoveToNextMonitor
+Gosub, MoveToNextMonitorRight
 if(mm = 0)
     WinRestore, A
 return
@@ -642,11 +642,52 @@ span2monitor:
 	; WinRestore, A
 	; SysGet, ma, MonitorWorkArea, %ms%	; monitor work areas (excludes taskbar-reserved space.)
 
-	if (ms==2)
+	if (ms==2) {
 		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
-	else
+		Sleep, 500
+		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+		Sleep, 500
+		WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	} else {
 		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+		Sleep, 500
+		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+		Sleep, 500
+		WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	}
 Return
+
+span2monitorRight:
+	; GoSub, mmove_check	
+	; WinGetPos, x, y, w, h, A
+	; ; Determine which monitor contains the center of the window.
+	 ms := GetMonitorAt(x+w/2, y+h/2)
+	; WinRestore, A
+	SysGet, ma, MonitorWorkArea, %ms%	; monitor work areas (excludes taskbar-reserved space.)
+
+	WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	Sleep, 500
+	WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	Sleep, 500
+	WinMove, A,, m_offset, maTop, (maRight-maLeft)*2, (maBottom-maTop)
+Return
+
+span2monitorLeft:
+	GoSub, mmove_check	
+	; WinGetPos, x, y, w, h, A
+	; ; Determine which monitor contains the center of the window.
+	; ms := GetMonitorAt(x+w/2, y+h/2)
+	; WinRestore, A
+	SysGet, ma, MonitorWorkArea, %ms%	; monitor work areas (excludes taskbar-reserved space.)
+
+
+	WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	Sleep, 500
+	WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+	Sleep, 500
+	WinMove, A,, maLeft-(maRight-maLeft), maTop, (maRight-maLeft)*2, (maBottom-maTop)
+Return
+
 
 #!right::
 	GoSub, mmove_check
@@ -746,7 +787,7 @@ GetMonitorAt(x, y, default = 1)
 }
 
 
-MoveToNextMonitor:
+MoveToNextMonitorRight:
 	WinGetPos, x, y, w, h, A
     ; Determine which monitor contains the center of the window.
     ms := GetMonitorAt(x+w/2, y+h/2)
@@ -779,6 +820,9 @@ MoveToNextMonitor:
 	
 	w *= (mdw/msw)
     h *= (mdh/msh)
+	
+	if (w > mdw)
+		w := mdw
 	
 	SetWinDelay, -1
 	; Move window, using resolution difference to scale co-ordinates.
@@ -821,6 +865,9 @@ MoveToNextMonitorLeft:
 	
 	w *= (mdw/msw)
     h *= (mdh/msh)
+	
+	if (w > mdw)
+		w := mdw
 	
 	SetWinDelay, -1
 	; Move window, using resolution difference to scale co-ordinates.
