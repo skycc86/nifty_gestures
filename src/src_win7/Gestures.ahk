@@ -283,7 +283,6 @@ return
 */
 
 
-^+space::
 DrawingModeToggle:
 
 if( m_DrawingMode ) {

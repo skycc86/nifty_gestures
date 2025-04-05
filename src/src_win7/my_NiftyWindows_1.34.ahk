@@ -427,6 +427,7 @@ NORMAL:
 Return
 
 
+^+space::
 ^!space::
 ExtraMenu:
 	; MouseGetPos, , , R_WinID
