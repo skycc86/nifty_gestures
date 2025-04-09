@@ -1114,8 +1114,9 @@ Return
  * This additional button is used to toggle the windows start menu.
  */
 
-$XButton1::
-$^XButton1::
+;$XButton1::
+;$^XButton1::
+unuse_xbutton1:
 	If ( NWD_ImmediateDown )
 		Return
 		
@@ -1157,8 +1158,9 @@ Return
  * window (if maximizable).
  */
 
-$XButton2::
-$^XButton2::
+; $XButton2::
+; $^XButton2::
+unuse_xbutton2:
 	If ( NWD_ImmediateDown )
 		Return
 	
@@ -2864,11 +2866,11 @@ CFG_ApplySettings:
 	; Hotkey, $^#RButton, %CFG_RightMouseButtonHookStr%
 	; Hotkey, $#RButton, %CFG_RightMouseButtonHookStr%
 	
-	Hotkey, $XButton1, %CFG_FourthMouseButtonHookStr%
-	Hotkey, $^XButton1, %CFG_FourthMouseButtonHookStr%
+	; Hotkey, $XButton1, %CFG_FourthMouseButtonHookStr%
+	; Hotkey, $^XButton1, %CFG_FourthMouseButtonHookStr%
 	
-	Hotkey, $XButton2, %CFG_FifthMouseButtonHookStr%
-	Hotkey, $^XButton2, %CFG_FifthMouseButtonHookStr%
+	; Hotkey, $XButton2, %CFG_FifthMouseButtonHookStr%
+	; Hotkey, $^XButton2, %CFG_FifthMouseButtonHookStr%
 Return
 
 

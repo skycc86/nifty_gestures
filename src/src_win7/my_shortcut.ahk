@@ -31,6 +31,13 @@
 ;#IfWinActive
 
 
+$XButton2::^c
+$XButton1::^v
+
+WheelLeft::Browser_Back
+WheelRight::Browser_Forward
+
+
 #c::run, c:\
 #n::run, notepad
 #p::run, mspaint 
