@@ -164,6 +164,23 @@ Default_L_R_L:
 	GoSub, span2monitorLeft
 return
 
+Default_R_D:
+	IfWinActive, A
+	{
+		WinGet, GRP_WinID, ID
+		If ( !GRP_WinID )
+			Return
+		WinGetClass, GRP_WinClass, ahk_id %GRP_WinID%
+		If ( GRP_WinClass = "Progman" )
+			Return
+		
+		GroupAdd, GroupF1, ahk_class %GRP_WinClass%
+		SYS_ToolTipText = Active window was added to group 1.
+		Gosub, SYS_ToolTipFeedbackShow
+	}
+Return
+
+
 ; Default_L_D_U:
 Default_DL_U:
 ; Default_U_L_D_U: ; <-- compensate for bad habit
